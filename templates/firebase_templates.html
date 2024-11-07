@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-messaging.js"></script>
+
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "",  // your create a web app in shoe the the api key
+            authDomain: "",  // your web app authDomain
+            projectId: "", //your web app project id
+            storageBucket: "", // your web app storage bucket
+            messagingSenderId: "", // your web app messaging sender id
+            appId: "",  // your web app messaging appId
+            measurementId: ""   // your web app measurement id
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        // Get the messaging service
+        const messaging = firebase.messaging();
+
+        // Request permission to receive notifications
+        messaging.requestPermission()
+            .then(() => {
+                console.log("Notification permission granted.");
+                // vapikey is a your firebase settings in clod messging in a show key pair is vapikey
+                return messaging.getToken({ vapidKey: '' });  
+            })
+            .then((token) => {
+                if (token) {
+                    console.log("FCM Token:", token);
+                
+                } else {
+                    console.log('No registration token available.');
+                }
+            })
+            .catch((err) => {
+                console.log('An error occurred while retrieving token. ', err);
+            });
+
+        // Handle incoming messages
+        messaging.onMessage((payload) => {
+            console.log('Message received. ', payload);
+        });
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>
