@@ -17,15 +17,18 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from app.views import showFirebaseJS, firebase_view, SentNotificationView
+from . import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", firebase_view),
-    path("firebase-messaging-sw.js", showFirebaseJS, name="showFirebaseJS"),
     path(
-        "sent-web-notification",
-        SentNotificationView.as_view(),
-        name="sent_web_notification",
+        "notifications/",
+        views.notification_sender_view,
+        name="notification_sender",
+    ),
+    path(
+        "firebase-messaging-sw.js",
+        views.show_notification,
+        name="show_notification",
     ),
 ]
